@@ -5,72 +5,137 @@
  */
 
 #include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/ext_power.h>
+#include "zmk-helpers/helper.h"
+
+#define _DEFAULT 0
+#define _NAVI 1
+#define _SYMBOL 2
+#define _NUMBER 3
+#define _MEDIA 4
+#define _FUNC 5
+
+#define _HYP LS(LC(LA(LGUI)))
+#define HYPER(key) LS(LC(LA(LG(key))))
+
+#define TAPPING_TERM 200
+#define QUICK_TAP 149
+
+
+&lt {
+	tapping-term-ms = <TAPPING_TERM>;
+	quick-tap-ms = <QUICK_TAP>;
+};
+
+&mt {
+	tapping-term-ms = <TAPPING_TERM>;
+	quick-tap-ms = <QUICK_TAP>;
+};
 
 
 / {
-    keymap {
-        compatible = "zmk,keymap";
+	chosen {
+		zmk,matrix_transform = &five_column_transform;
+	};
+	/* Key index
+	0  1  2  3  4         5  6  7  8  9
+	10 11 12 13 14        15 16 17 18 19
+	20 21 22 23 24        25 26 27 28 29
+	30 31 32    33 34 35         */
+	
+	combos {
+		compatible = "zmk,combos";
+		
+		combo_quote {
+			timeout-ms = <50>;
+			key-positions = <17 18 19>;
+			bindings = <&kp SQT>;
+		};
+		combo_esc {
+			timeout-ms = <50>;
+			key-positions = <11 12 13>;
+			bindings = <&kp ESC>;
+		};
+	};
 
-        default_layer {
+	behaviors {
+		hm: homerow_mods {
+			compatible = "zmk,behavior-hold-tap";
+			label = "HOMEROW_MODS";
+			#binding-cells = <2>;
+			tapping-term-ms = <TAPPING_TERM>;
+			quick-tap-ms = <QUICK_TAP>;
+			flavor = "tap-preferred";
+			bindings = <&kp>, <&kp>;
+		};
+	};
 
-            bindings = <
-                &kp Q    &kp W &kp F &kp P &kp B        			&kp J &kp L &kp U &kp HU_Y &kp HU_AA
-                &kp A    &kp R &kp S &kp T &kp G        			&kp M &kp N &kp E &kp I    &kp O
-                &kp HU_Z &kp X &kp C &kp D &kp V        			&kp K &kp H &sl 1 &sl 2    &kp HU_EE
-                &mt LCTL TAB &lt 3 SPACE &mt LC(LS(LALT)) RET      	&sk LSFT &lt 4 BKSP   &mt LGUI ESC
-            >;
-        };
-
-
-
-        sym_layer {
-
-            bindings = <
-                &kp HU_MORE &kp HU_RCBR &kp HU_RBKT  &kp HU_RPRN  &kp HU_BSLS  	    &kp HU_TILD &kp HU_CIRC &kp HU_PARA &kp HU_EURO &kp HU_AT
-                &kp HU_LESS &kp HU_LCBR &kp HU_LBKT  &kp HU_LPRN  &kp HU_SLSH       &kp HU_PERC &kp HU_ASTR &kp HU_RING &kp HU_COLN &kp HU_SCLN
-                &kp HU_HASH &kp HU_DLR  &kp HU_QST   &kp HU_EXLM  &kp HU_PIPE 	    &kp HU_AMPR &kp HU_EQL  &trans      &kp HU_PLUS &kp HU_GRV
-                                        &kp HU_UNDS  &kp HU_QUOT  &kp HU_DQOT		&kp HU_DOT  &kp HU_COMM &kp HU_MINS
-            >;
-        };
-
-
-    
-        msc_layer {
-
-            bindings = <
-                &trans    &kp HU_UEE &kp HU_UE   &kp HU_UU   &trans         	&trans     &trans      &trans      &trans &trans
-                &kp HU_II &kp HU_OEE &kp HU_OE   &kp HU_OO   &trans             &trans     &trans      &trans      &trans &trans
-                &trans    &trans     &trans      &trans      &trans         	&trans     &trans      &trans      &trans &trans
-                                     &kp HU_UNDS &kp HU_QUOT &kp HU_DQOT		&kp HU_DOT &kp HU_COMM &kp HU_MINS
-            >;
-        };
-
-
-
-        nav_layer {
-
-            bindings = <
-                &kp K_MUTE   &kp K_PREV &kp K_PP  &kp K_NEXT &kp K_VOL_UP  		    &none     &kp PG_UP &kp SPACE &kp PG_DN &kp INS
-                &sk LGUI     &sk LALT   &sk LSFT  &sk LCTL   &kp K_VOL_DN   		&kp K_APP &kp LEFT  &kp UP    &kp RIGHT &kp TAB
-                &kp LC(HU_Z) &kp LC(X)  &kp LC(C) &kp LC(D)  &kp LC(V) 		        &none     &kp HOME  &kp DOWN  &kp END   &kp RET
-                                        &trans    &trans     &trans                 &kp DEL   &kp BKSP  &kp ESC
-            >;
-        };
-
-
-
-        num_layer {
-
-            bindings = <
-                &kp F1    &kp F2    &kp F3    &kp F4          &kp F5  		          &kp HU_MINS &kp HU_7 &kp HU_8 &kp HU_9 &kp BKSP
-                &kp F6    &kp F7    &kp F8    &kp F9          &kp F10   		      &kp HU_0    &kp HU_4 &kp HU_5 &kp HU_6 &kp HU_DOT
-                &kp F11   &kp F12   &kp F13	  &kp PRINTSCREEN &kp PAUSE_BREAK 		  &kp HU_PLUS &kp HU_1 &kp HU_2 &kp HU_3 &kp HU_COMM
-                                    &kp TAB   &kp SPACE       &kp RET 			      &trans 	  &trans   &trans
-            >;
-        };
-
-          
-    };
+	keymap {
+		compatible = "zmk,keymap";
+		
+		default_layer {
+			label = "QWERTY";
+			bindings = <
+			&kp Q      &kp W      &kp E       &kp R       &kp T   &kp Y &kp U        &kp I        &kp O      &kp P
+			&hm LGUI A &hm LALT S &hm LCTRL D &hm LSHFT F &kp G   &kp H &hm LSHFT J  &hm LCTRL K  &hm LALT L &hm LGUI SEMI
+			&kp Z      &kp X      &kp C       &kp V       &kp B   &kp N &kp M        &kp COMMA    &kp DOT    &kp FSLH
+			&lt _MEDIA ESC  &lt _SYMBOL BSPC  &mt _HYP SPC  &lt _NAVI RET  &lt _NUMBER TAB  &lt _FUNC DEL
+			>;
+		};
+		
+		navi_layer {
+			label = "NAVI";
+			bindings = <
+			&none      &none      &none       &none       &none  &kp K_REDO  &kp LC(V)    &kp LC(C)   &kp LC(X)  &kp LC(Z)
+			&kp LGUI   &kp LALT   &kp LCTRL   &kp LSHFT   &none  &kp LEFT    &kp DOWN     &kp UP      &kp RIGHT  &caps_word
+			&kp RGUI   &sk RALT   &sk RCTRL   &sk RSHFT   &none  &kp HOME    &kp PG_DN    &kp PG_UP   &kp END    &kp INS
+			&trans     &trans      &trans                         &trans       &trans      &trans
+			>;
+		};
+		
+		symbol_layer {
+			label = "SYMBOL";
+			bindings = <
+			&kp GRAVE  &kp AMPS  &kp STAR   &kp MINUS   &kp NUBS   &kp KC_NONUS_HASH     &kp UNDER &kp LT    &kp GT    &kp TILDE
+			&kp COLON  &kp DLLR  &kp PRCNT  &kp CARET   &kp EQUAL  &kp PLUS  &kp LPAR  &kp LBKT  &kp LBRC  &kp SEMI
+			&kp PIPE   &kp EXCL  &kp AT     &kp HASH    &kp NUHS   &none     &kp RPAR  &kp RBKT  &kp RBRC  &kp BSLH
+			&trans    &trans     &trans                           &trans    &trans    &trans
+			>;
+		};
+		
+		number_layer {
+			label = "NUMBER";
+			bindings = <
+			&kp FSLH  &kp N7  &kp N8  &kp N9  &kp STAR   &none  &none      &none      &none     &none
+			&kp N0    &kp N4  &kp N5  &kp N6  &kp MINUS  &none  &kp LSHFT  &kp LCTRL  &kp LALT  &kp LGUI
+			&kp DOT   &kp N1  &kp N2  &kp N3  &kp PLUS   &none  &none      &none      &none     &none
+			&trans  &trans  &trans                    &trans     &trans     &trans
+			>;
+		};
+		
+		
+		media_layer {
+			label = "MEDIA";
+			bindings = <
+			&none      &none      &none       &none       &none      &none      &none   &none    &none   &none
+			&kp LGUI   &kp LALT   &kp LCTRL   &kp LSHFT   &none      &kp C_PREV  &kp C_VOL_DN  &kp C_VOL_UP  &kp C_NEXT  &kp K_MUTE
+			&none      &none      &none       &none       &none      &kp C_PP    &none         &none         &none       &none
+			&trans     &trans      &trans                             &trans        &trans        &trans
+			>;
+		};
+		
+		function_layer {
+			label = "FUNC";
+			bindings = <
+			&kp F1     &kp F2       &kp F3      &kp F4      &kp F5        &bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3
+			&kp F6     &kp F7       &kp F8      &kp F9      &kp F10        &none       &kp LSHFT     &kp LCTRL     &kp LALT      &kp LGUI
+			&kp F11    &kp F12      &kp F13     &kp F14     &kp F15       &none       &none         &none         &none         &none
+			&bootloader  &trans      &trans                                &trans        &trans        &bootloader
+			>;
+		};
+		
+	};
 };
+
