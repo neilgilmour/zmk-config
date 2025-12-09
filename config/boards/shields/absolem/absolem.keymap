@@ -39,10 +39,10 @@
 	10 11 12 13 14        15 16 17 18 19
 	20 21 22 23 24        25 26 27 28 29
 	        30 31 32    33 34 35         */
-	
+
 	combos {
 		compatible = "zmk,combos";
-		
+
 		combo_quote {
 			timeout-ms = <50>;
 			key-positions = <17 18 19>;
@@ -154,78 +154,76 @@
 
 	keymap {
 		compatible = "zmk,keymap";
-		
+
 		default_layer {
 			label = "QWERTY";
 			bindings = <
-			&kp Q      &kp W      &kp E       &kp R       &kp T   &kp Y &kp U        &kp I        &kp O      &kp P
-			&hm LGUI A &hm LALT S &hm LCTRL D &hm LSHFT F &kp G   &kp H &hm LSHFT J  &hm LCTRL K  &hm LALT L &hm LGUI SEMI
-			&kp Z      &kp X      &kp C       &kp V       &kp B   &kp N &kp M        &kp COMMA    &kp DOT    &kp FSLH
-			&lt _MEDIA BSPC  &lt _SYMBOL SPC  &lt _MACRO CAPS  &lt _NAVI BSPC  &lt _NUMBER RET  &lt _FUNC TAB
+			&kp Q       &kp W       &kp E        &kp R        &kp T          &kp Y  &kp U        &kp I        &kp O       &kp P
+			&hm LGUI A  &hm LALT S  &hm LCTRL D  &hm LSHFT F  &kp G          &kp H  &hm LSHFT J  &hm LCTRL K  &hm LALT L  &hm LGUI SEMI
+			&kp Z       &kp X       &kp C        &kp V        &kp B          &kp N  &kp M        &kp COMMA    &kp DOT     &kp FSLH
+			                   &lt _MEDIA BSPC  &lt _SYMBOL SPC  &lt _MACRO CAPS    &lt _NAVI BSPC  &lt _NUMBER RET  &lt _FUNC TAB
 			>;
 		};
 
 		navi_layer {
 			label = "NAVI";
 			bindings = <
-			&none      &none      &none       &none       &none  &kp K_REDO  &kp LC(V)    &kp LC(C)   &kp LC(X)  &kp LC(Z)
-			&kp LGUI   &kp LALT   &kp LCTRL   &kp LSHFT   &none  &kp LEFT    &kp DOWN     &kp UP      &kp RIGHT  &caps_word
-			&kp RGUI   &sk RALT   &sk RCTRL   &sk RSHFT   &none  &kp HOME    &kp PG_DN    &kp PG_UP   &kp END    &kp INS
-			&trans     &trans      &trans                         &trans       &trans      &trans
+			&none     &none     &none      &none      &none      &kp K_REDO  &kp LC(V)  &kp LC(C)  &kp LC(X)  &kp LC(Z)
+			&kp LGUI  &kp LALT  &kp LCTRL  &kp LSHFT  &none      &kp LEFT    &kp DOWN   &kp UP     &kp RIGHT  &caps_word
+			&kp RGUI  &sk RALT  &sk RCTRL  &sk RSHFT  &none      &kp HOME    &kp PG_DN  &kp PG_UP  &kp END    &kp INS
+			                      &trans      &trans      &trans         &trans      &trans      &trans
 			>;
 		};
-		
+
 		symbol_layer {
 			label = "SYMBOL";
 			bindings = <
-			&kp GRAVE  &kp AMPS  &kp STAR   &kp MINUS   &kp NUBS   &none              &kp UNDER &kp LT    &kp GT    &kp TILDE
-			&kp COLON  &kp DLLR  &kp PRCNT  &kp CARET   &kp EQUAL  &kp LT  &kp LPAR  &kp LBKT  &kp LBRC  &kp SEMI
-			&kp PIPE   &kp EXCL  &kp AT     &kp HASH    &kp NUHS   &kp GT     &kp RPAR  &kp RBKT  &kp RBRC  &kp BSLH
-			&trans    &trans     &trans                           &trans    &trans    &trans
+			&kp GRAVE  &kp AMPS  &kp STAR   &kp MINUS  &kp NUBS      &none   &kp UNDER  &kp LT    &kp GT    &kp TILDE
+			&kp COLON  &kp DLLR  &kp PRCNT  &kp CARET  &kp EQUAL     &kp LT  &kp LPAR   &kp LBKT  &kp LBRC  &kp SEMI
+			&kp PIPE   &kp EXCL  &kp AT     &kp HASH   &kp NUHS      &kp GT  &kp RPAR   &kp RBKT  &kp RBRC  &kp BSLH
+			                       &trans      &trans      &trans        &trans  &trans     &trans
 			>;
 		};
-		
+
 		number_layer {
 			label = "NUMBER";
 			bindings = <
-			&kp STAR  &kp N7  &kp N8  &kp N9  &kp EQUAL   &none  &none      &none      &none     &none
-			&kp N0    &kp N4  &kp N5  &kp N6  &kp MINUS  &none  &kp LSHFT  &kp LCTRL  &kp LALT  &kp LGUI
-			&kp DOT   &kp N1  &kp N2  &kp N3  &kp PLUS   &none  &none      &none      &none     &none
-			&trans  &trans  &trans                    &trans     &trans     &trans
+			&kp STAR  &kp N7  &kp N8  &kp N9  &kp EQUAL     &none  &kp LSHFT  &kp LCTRL  &kp LALT  &kp LGUI
+			&kp N0    &kp N4  &kp N5  &kp N6  &kp MINUS     &kp LEFT    &kp DOWN   &kp UP     &kp RIGHT  &caps_word
+			&kp DOT   &kp N1  &kp N2  &kp N3  &kp PLUS      &none  &none      &none      &none     &none
+			                  &trans   &trans   &trans          &trans  &trans     &trans
 			>;
 		};
-		
-		
+
 		media_layer {
 			label = "MEDIA";
 			bindings = <
-			&none      &none      &none       &none       &none      &none      &none   &none    &none   &none
-			&kp LGUI   &kp LALT   &kp LCTRL   &kp LSHFT   &none      &kp C_PREV  &kp C_VOL_DN  &kp C_VOL_UP  &kp C_NEXT  &kp K_MUTE
-			&none      &none      &none       &none       &none      &kp C_PP    &none         &none         &none       &none
-			&trans     &trans      &trans                             &trans        &trans        &trans
+			&none     &none     &none      &none      &none      &none       &none         &none         &none       &none
+			&kp LGUI  &kp LALT  &kp LCTRL  &kp LSHFT  &none      &kp C_PREV  &kp C_VOL_DN  &kp C_VOL_UP  &kp C_NEXT  &kp K_MUTE
+			&none     &none     &none      &none      &none      &kp C_PP    &none         &none         &none       &none
+			                       &trans      &trans      &trans         &trans      &trans        &trans
 			>;
 		};
-		
+
 		function_layer {
 			label = "FUNC";
 			bindings = <
-			&kp F1     &kp F2       &kp F3      &kp F4      &kp F5        &bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3
-			&kp F6     &kp F7       &kp F8      &kp F9      &kp F10        &none       &kp LSHFT     &kp LCTRL     &kp LALT      &kp LGUI
-			&kp F11    &kp F12      &kp F13     &kp F14     &kp F15       &none       &none         &none         &none         &none
-			&bootloader  &trans      &trans                                &trans        &trans        &bootloader
+			&kp F1   &kp F2   &kp F3   &kp F4   &kp F5       &bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3
+			&kp F6   &kp F7   &kp F8   &kp F9   &kp F10      &none       &kp LSHFT     &kp LCTRL     &kp LALT      &kp LGUI
+			&kp F11  &kp F12  &kp F13  &kp F14  &kp F15      &none       &none         &none         &none         &none
+			                &bootloader  &trans   &trans           &trans      &trans        &bootloader
 			>;
 		};
 
 		macro_layer {
 			label = "MACRO";
 			bindings = <
-			&none      &none      &none       &none       &none      &none      &none      &none       &none       &none
-			&none      &m_email1  &m_email2   &m_name     &none      &none      &m_this    &m_arrow    &m_darrow   &m_return
-			&none      &none      &none       &none       &none      &m_fn      &m_pub_fn  &m_pro_fn   &m_pri_fn   &none
-			&trans     &trans     &trans                             &trans     &trans     &trans
+			&none  &none      &none      &none    &none      &none   &none      &none      &none      &none
+			&none  &m_email1  &m_email2  &m_name  &none      &none   &m_this    &m_arrow   &m_darrow  &m_return
+			&none  &none      &none      &none    &none      &m_fn   &m_pub_fn  &m_pro_fn  &m_pri_fn  &none
+			                     &trans      &trans    &trans         &trans  &trans     &trans
 			>;
 		};
 
 	};
 };
-
